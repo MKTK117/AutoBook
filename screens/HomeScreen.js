@@ -1,4 +1,5 @@
 import {
+  Image,
   Button,
   Pressable,
   ScrollView,
@@ -111,7 +112,7 @@ const HomeScreen = () => {
                   setSelectedDates(startDate, endDate)
                 }
                 allowFontScaling={false} // optional
-                placeholder={"Apr 27, 2018 → Jul 10, 2018"}
+                placeholder={"Select your Dates"}
                 mode={"range"}
               />
             </Pressable>
@@ -124,7 +125,7 @@ const HomeScreen = () => {
               <Ionicons name="person-add-sharp" size={24} color="black" />
               <TextInput
                 placeholderTextColor="red"
-                placeholder="4 seats • 2 adults • 0 children"
+                placeholder={`${seats} seats • ${adults} adults • ${childrens} children`}
               />
             </Pressable>
 
@@ -138,6 +139,115 @@ const HomeScreen = () => {
               <Text style={styles.searchBtn}>Search</Text>
             </Pressable>
           </View>
+
+          <Text
+            style={{ marginHorizontal: 25, fontSize: 17, fontWeight: "500" }}
+          >
+            Ride more, spend less.
+          </Text>
+          <ScrollView 
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          >
+
+            <Pressable
+              style={{
+                width: 200,
+                height: 150,
+                marginTop: 10,
+                backgroundColor: "#003580",
+                borderRadius: 10,
+                padding: 20,
+                marginHorizontal:10
+              }}
+            >
+              <Text 
+              style={{
+                fontSize:15,
+                fontWeight:'bold',
+                color:'#fff',
+                marginVertical:7
+              }}
+              >Genius</Text>
+              <Text
+              style={{
+                fontSize:15,
+                fontWeight:'500',
+                color:'#fff'
+              }}
+              >You are ate Genious level one in our loyalty program.</Text>
+            </Pressable>
+
+            <Pressable
+              style={{
+                width: 200,
+                height: 150,
+                marginTop: 10,
+                borderColor:'#E0E0E0',
+                borderWidth:2,
+                borderRadius: 10,
+                padding: 20,
+                marginHorizontal:10
+              }}
+            >
+              <Text 
+              style={{
+                fontSize:15,
+                fontWeight:'bold',
+                color:'#003580',
+                marginVertical:7
+              }}
+              >10% Discounts</Text>
+              <Text
+              style={{
+                fontSize:15,
+                fontWeight:'500',
+                
+              }}
+              >Enjoy Discounts at participating at properties worldwide.</Text>
+            </Pressable>
+
+            <Pressable
+              style={{
+                width: 200,
+                height: 150,
+                marginTop: 10,
+                borderColor:'#E0E0E0',
+                borderWidth:2,
+                borderRadius: 10,
+                padding: 20,
+                marginHorizontal:10
+              }}
+            >
+              <Text 
+              style={{
+                fontSize:15,
+                fontWeight:'bold',
+                color:'#003580',
+                marginVertical:7
+              }}
+              >New rides every month!</Text>
+              <Text
+              style={{
+                fontSize:15,
+                fontWeight:'500',
+              }}
+              >Feel free to choose whatever auto you want.</Text>
+            </Pressable>
+
+          </ScrollView>
+
+          {/* Image Link */}
+          <Pressable
+          style={styles.imageLinkPressable}
+          >
+            <Image
+            style={styles.imageLinkImg}
+            source={{
+              uri: "https://assets.stickpng.com/thumbs/5a32a821cb9a85480a628f8f.png"
+            }}
+            />
+          </Pressable>
         </ScrollView>
       </View>
 
@@ -171,33 +281,71 @@ const HomeScreen = () => {
         onTouchOutside={() => setModalVisible(!modalVisible)}
       >
         <ModalContent style={{ width: "100%", height: 310 }}>
-          <View
-            style={styles.modalView}
-          >
-            <Text
-            style={styles.modalControlsText}
-            >Seats</Text>
-            <Pressable
-              style={styles.modalPressable}
-            >
-              <Pressable 
-              style={styles.modalControlsPressables}
-              onPress={() => setSeats(seats - 1)}>
-                <Text
-                style={styles.modalControlsIncDec}
-                >-</Text>
+          <View style={styles.modalView}>
+            <Text style={styles.modalControlsText}>Seats</Text>
+            <Pressable style={styles.modalPressable}>
+              <Pressable
+                style={styles.modalControlsPressables}
+                onPress={() => setSeats(Math.max(2, seats - 2))}
+              >
+                <Text style={styles.modalControlsIncDec}>-</Text>
               </Pressable>
 
               <Pressable>
                 <Text>{seats}</Text>
               </Pressable>
 
-              <Pressable 
-              style={styles.modalControlsPressables}
-              onPress={() => setSeats(seats + 1)}>
-                <Text
-                style={styles.modalControlsIncDec}
-                >+</Text>
+              <Pressable
+                style={styles.modalControlsPressables}
+                onPress={() => setSeats(Math.min(6, seats + 2))}
+              >
+                <Text style={styles.modalControlsIncDec}>+</Text>
+              </Pressable>
+            </Pressable>
+          </View>
+
+          <View style={styles.modalView}>
+            <Text style={styles.modalControlsText}>Adults</Text>
+            <Pressable style={styles.modalPressable}>
+              <Pressable
+                style={styles.modalControlsPressables}
+                onPress={() => setAdults(Math.max(1, adults - 1))}
+              >
+                <Text style={styles.modalControlsIncDec}>-</Text>
+              </Pressable>
+
+              <Pressable>
+                <Text>{adults}</Text>
+              </Pressable>
+
+              <Pressable
+                style={styles.modalControlsPressables}
+                onPress={() => setAdults(Math.min(seats, adults + 1))}
+              >
+                <Text style={styles.modalControlsIncDec}>+</Text>
+              </Pressable>
+            </Pressable>
+          </View>
+
+          <View style={styles.modalView}>
+            <Text style={styles.modalControlsText}>Childrens</Text>
+            <Pressable style={styles.modalPressable}>
+              <Pressable
+                style={styles.modalControlsPressables}
+                onPress={() => setChildrens(childrens - 1)}
+              >
+                <Text style={styles.modalControlsIncDec}>-</Text>
+              </Pressable>
+
+              <Pressable>
+                <Text>{childrens}</Text>
+              </Pressable>
+
+              <Pressable
+                style={styles.modalControlsPressables}
+                onPress={() => setChildrens(childrens + 1)}
+              >
+                <Text style={styles.modalControlsIncDec}>+</Text>
               </Pressable>
             </Pressable>
           </View>
@@ -230,6 +378,16 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#FFF",
   },
+  imageLinkPressable: {
+    marginTop:40,
+    justifyContent:'center',
+    alignItems:'center'
+  },
+  imageLinkImg: {
+    width:200,
+    height:50,
+    resizeMode:'cover'
+  },
 
   // Modal for number of passengers
   modalView: {
@@ -239,27 +397,29 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   modalPressable: {
-    flexDirection: "row", 
-    alignItems: "center", 
-    gap: 10 
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
   },
   modalControlsPressables: {
-    width:26,
-    height:26,
-    borderRadius:13,
-    borderColor:'#BEBEBE',
-    backgroundColor:'#E0E0E0'
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    borderColor: "#BEBEBE",
+    backgroundColor: "#E0E0E0",
   },
   modalControlsIncDec: {
-    textAlign:"center",
-    fontSize:20,
-    fontWeight:"600",
-    paddingHorizontal:6,
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "600",
+    paddingHorizontal: 6,
   },
   modalControlsText: {
-    textAlign:"center",
-    fontSize:20,
-    fontWeight:"500",
-    paddingHorizontal:6,
-  }
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "500",
+    paddingHorizontal: 6,
+  },
+
+
 });
