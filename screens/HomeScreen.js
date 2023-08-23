@@ -7,9 +7,10 @@ import {
   Text,
   TextInput,
   View,
+  Alert
 } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "../components/Header";
 import DatePicker from "react-native-date-ranges";
@@ -23,12 +24,15 @@ import {
 } from "react-native-modals";
 
 const HomeScreen = () => {
+  const route = useRoute();
   const navigation = useNavigation();
   const [selectedDates, setSelectedDates] = useState();
   const [seats, setSeats] = useState(4);
   const [adults, setAdults] = useState(2);
   const [childrens, setChildrens] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+
+
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -68,6 +72,30 @@ const HomeScreen = () => {
       />
     );
   };
+
+  const searchPlaces = (place) => {
+    if (!route.params || !selectedDates) {
+      Alert.alert('Error', 'Fill all fields', [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
+    }
+
+    if (route.params && selectedDates) {
+      navigation.navigate("Places", {
+        rooms: seats,
+        adults: adults,
+        childrens: childrens,
+        selectedDates: selectedDates,
+        place:place,
+      })
+    }
+  };
+
   return (
     <>
       <View>
@@ -76,11 +104,16 @@ const HomeScreen = () => {
         <ScrollView>
           <View style={styles.filterBox}>
             {/* Location */}
-            <Pressable style={styles.pressableBox}>
+            <Pressable
+              onPress={() => navigation.navigate("Search")}
+              style={styles.pressableBox}
+            >
               <Ionicons name="search" size={24} color="black" />
               <TextInput
                 placeholderTextColor="black"
-                placeholder="Enter your Location"
+                placeholder={
+                  route?.params ? route.params.input : "Enter your Location"
+                }
               />
             </Pressable>
 
@@ -118,6 +151,7 @@ const HomeScreen = () => {
             </Pressable>
 
             {/* Number of Passangers */}
+
             <Pressable
               style={styles.pressableBox}
               onPress={() => setModalVisible(!modalVisible)}
@@ -130,7 +164,9 @@ const HomeScreen = () => {
             </Pressable>
 
             {/* Search Button */}
+
             <Pressable
+              onPress={() => searchPlaces(route?.params.input)}
               style={[
                 styles.pressableBox,
                 { backgroundColor: "#2a52be", justifyContent: "center" },
@@ -140,16 +176,14 @@ const HomeScreen = () => {
             </Pressable>
           </View>
 
+          {/* Promo Block */}
+
           <Text
             style={{ marginHorizontal: 25, fontSize: 17, fontWeight: "500" }}
           >
             Ride more, spend less.
           </Text>
-          <ScrollView 
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          >
-
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <Pressable
               style={{
                 width: 200,
@@ -158,24 +192,28 @@ const HomeScreen = () => {
                 backgroundColor: "#003580",
                 borderRadius: 10,
                 padding: 20,
-                marginHorizontal:10
+                marginHorizontal: 10,
               }}
             >
-              <Text 
-              style={{
-                fontSize:15,
-                fontWeight:'bold',
-                color:'#fff',
-                marginVertical:7
-              }}
-              >Genius</Text>
               <Text
-              style={{
-                fontSize:15,
-                fontWeight:'500',
-                color:'#fff'
-              }}
-              >You are ate Genious level one in our loyalty program.</Text>
+                style={{
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  color: "#fff",
+                  marginVertical: 7,
+                }}
+              >
+                Genius
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: "500",
+                  color: "#fff",
+                }}
+              >
+                You are ate Genious level one in our loyalty program.
+              </Text>
             </Pressable>
 
             <Pressable
@@ -183,28 +221,31 @@ const HomeScreen = () => {
                 width: 200,
                 height: 150,
                 marginTop: 10,
-                borderColor:'#E0E0E0',
-                borderWidth:2,
+                borderColor: "#E0E0E0",
+                borderWidth: 2,
                 borderRadius: 10,
                 padding: 20,
-                marginHorizontal:10
+                marginHorizontal: 10,
               }}
             >
-              <Text 
-              style={{
-                fontSize:15,
-                fontWeight:'bold',
-                color:'#003580',
-                marginVertical:7
-              }}
-              >10% Discounts</Text>
               <Text
-              style={{
-                fontSize:15,
-                fontWeight:'500',
-                
-              }}
-              >Enjoy Discounts at participating at properties worldwide.</Text>
+                style={{
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  color: "#003580",
+                  marginVertical: 7,
+                }}
+              >
+                10% Discounts
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: "500",
+                }}
+              >
+                Enjoy Discounts at participating at properties worldwide.
+              </Text>
             </Pressable>
 
             <Pressable
@@ -212,44 +253,48 @@ const HomeScreen = () => {
                 width: 200,
                 height: 150,
                 marginTop: 10,
-                borderColor:'#E0E0E0',
-                borderWidth:2,
+                borderColor: "#E0E0E0",
+                borderWidth: 2,
                 borderRadius: 10,
                 padding: 20,
-                marginHorizontal:10
+                marginHorizontal: 10,
               }}
             >
-              <Text 
-              style={{
-                fontSize:15,
-                fontWeight:'bold',
-                color:'#003580',
-                marginVertical:7
-              }}
-              >New rides every month!</Text>
               <Text
-              style={{
-                fontSize:15,
-                fontWeight:'500',
-              }}
-              >Feel free to choose whatever auto you want.</Text>
+                style={{
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  color: "#003580",
+                  marginVertical: 7,
+                }}
+              >
+                New rides every month!
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: "500",
+                }}
+              >
+                Feel free to choose whatever auto you want.
+              </Text>
             </Pressable>
-
           </ScrollView>
 
           {/* Image Link */}
-          <Pressable
-          style={styles.imageLinkPressable}
-          >
+
+          <Pressable style={styles.imageLinkPressable}>
             <Image
-            style={styles.imageLinkImg}
-            source={{
-              uri: "https://assets.stickpng.com/thumbs/5a32a821cb9a85480a628f8f.png"
-            }}
+              style={styles.imageLinkImg}
+              source={{
+                uri: "https://assets.stickpng.com/thumbs/5a32a821cb9a85480a628f8f.png",
+              }}
             />
           </Pressable>
         </ScrollView>
       </View>
+
+      {/* Modal for amount of People */}
 
       <BottomModal
         swipeThreshold={200}
@@ -379,14 +424,14 @@ const styles = StyleSheet.create({
     color: "#FFF",
   },
   imageLinkPressable: {
-    marginTop:40,
-    justifyContent:'center',
-    alignItems:'center'
+    marginTop: 40,
+    justifyContent: "center",
+    alignItems: "center",
   },
   imageLinkImg: {
-    width:200,
-    height:50,
-    resizeMode:'cover'
+    width: 200,
+    height: 50,
+    resizeMode: "cover",
   },
 
   // Modal for number of passengers
@@ -420,6 +465,4 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     paddingHorizontal: 6,
   },
-
-
 });

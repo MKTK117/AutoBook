@@ -10,6 +10,8 @@ import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
+import SearchScreen from "./screens/SearchScreen";
+import PlacesScreen from "./screens/PlacesScreen";
 
 const StackNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -88,6 +90,15 @@ const StackNavigator = () => {
           name="Main"
           component={BottomTabs}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Search"
+          component={SearchScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Places"
+          component={PlacesScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
