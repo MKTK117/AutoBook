@@ -1,15 +1,25 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Octicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome } from '@expo/vector-icons';
 import PropertyCard from "../components/PropertyCard";
+import {
+  BottomModal,
+  ModalContent,
+  ModalFooter,
+  ModalTitle,
+  SlideAnimation,
+} from "react-native-modals";
 
 const PlacesScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState([]);
 
-  // Test data
+  // Test data !!!!!!!!!!
   const data = [
     {
       id: "0",
@@ -489,10 +499,71 @@ const PlacesScreen = () => {
     });
   }, []);
 
+  const filters = [
+    {
+        id:'0',
+        filter:'cost: Low to High'
+    },
+
+    {
+        id:'1',
+        filter:'cost: High to Low'
+    }
+
+  ];
+
+  const searchPlaces = data?.filter((item) => item.place === route.params.place);
+  const [sortedData, setSortedData] = useState(data);
+
+
+//   That arschlohe code below need to be changed !!! Just for a test!!!!
+
+  const compare = (a, b) => {
+    if (a.newPrice > b.newPrice) {
+        return -1;
+    }
+    if (a.newPrice < b.newPrice) {
+        return 1;
+    }
+    else {
+        return 0
+    }
+  }
+  const compareCase = (a, b) => {
+    if (a.newPrice < b.newPrice) {
+        return -1;
+    }
+    if (a.newPrice > b.newPrice) {
+        return 1;
+    }
+    else {
+        return 0
+    }
+  }
+
+//  !?!?!?!
+
+  const applyFilter = (filter) => {
+    setModalVisible(false)
+    switch(filter) {
+        case 'cost: Low to High':
+            searchPlaces.map((val) => val.properties.sort(compare))
+            setSortedData(searchPlaces);
+            break;
+        case 'cost: High to Low':
+            searchPlaces.map((val) => val.properties.sort(compareCase))
+            setSortedData(searchPlaces);
+            break;
+    }
+  }
+
   return (
     <View>
       <Pressable style={styles.headerPressable}>
-        <Pressable style={styles.itemPressable}>
+        <Pressable
+          onPress={() => setModalVisible(!modalVisible)}
+          style={styles.itemPressable}
+        >
           <Octicons name="arrow-switch" size={22} color="grey" />
           <Text style={styles.itemText}>Sort</Text>
         </Pressable>
@@ -509,22 +580,80 @@ const PlacesScreen = () => {
       </Pressable>
 
       <ScrollView>
-        {data
+        {sortedData
           ?.filter((item) => item.place === route.params.place)
           .map((item) =>
-            item.properties.map((property, index) => 
-            <PropertyCard 
-            key={index}
-            rooms={route.params.rooms}
-            childrens={route.params.childrens}
-            adults={route.params.adults}
-            selectedDates={route.params.selectedDates}
-            property={property}
-            availableRooms={property.rooms}
-            />
-            )
+            item.properties.map((property, index) => (
+              <PropertyCard
+                key={index}
+                rooms={route.params.rooms}
+                childrens={route.params.childrens}
+                adults={route.params.adults}
+                selectedDates={route.params.selectedDates}
+                property={property}
+                availableRooms={property.rooms}
+              />
+            ))
           )}
       </ScrollView>
+
+      <BottomModal
+        onBackdropPress={() => setModalVisible(!modalVisible)}
+        swipeDirection={["up", "down"]}
+        swipeThreshold={200}
+        footer={
+          <ModalFooter>
+            <Pressable 
+            onPress={() => applyFilter(selectedFilter)}
+            style={styles.modalBottomPressable}>
+              <Text>Apply</Text>
+            </Pressable>
+          </ModalFooter>
+        }
+        modalTitle={<ModalTitle title="Sort and Filter" />}
+        modalAnimation={
+          new SlideAnimation({
+            slideFrom: "bottom",
+          })
+        }
+        onHardwareBackPress={() => setModalVisible(!modalVisible)}
+        visible={modalVisible}
+        onTouchOutside={() => setModalVisible(!modalVisible)}
+      >
+        <ModalContent style={styles.modalContent}>
+          <View style={{ flexDirection: "row" }}>
+            <View
+              style={{
+                flex: 2,
+                marginVertical: 10,
+                height: 280,
+                borderRightWidth: 1,
+                borderColor: "#E0E0E0",
+              }}
+            >
+              <Text style={{ textAlign: "center" }}>Sort</Text>
+            </View>
+            <View style={{ flex: 3, margin: 10, }}>
+                {filters.map((item, index) => (
+                    <Pressable 
+                    onPress={() => setSelectedFilter(item.filter)}
+                    style={{flexDirection:'row', gap:6, alignItems:'center', marginVertical:10}}
+                    key={index}>
+                        {selectedFilter.includes(item.filter) ? (
+                            <FontAwesome name="circle" size={18} color="green" />
+                        ) : (
+                            <FontAwesome name="circle-o" size={18} color="black" />
+                        )}
+                        
+                        <Text 
+                        style={{fontSize:16, fontWeight:'500'}}
+                        >{item.filter}</Text>
+                    </Pressable>
+                ))}
+            </View>
+          </View>
+        </ModalContent>
+      </BottomModal>
     </View>
   );
 };
@@ -549,5 +678,18 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "500",
     color: "#bbb",
+  },
+  //   ModalBottom
+
+  modalBottomPressable: {
+    paddingRight: 10,
+    marginRight: "auto",
+    marginLeft: "auto",
+    marginVertical: 10,
+    marginBottom:30
+  },
+  modalContent: {
+    width: "100%",
+    height: 280,
   },
 });
