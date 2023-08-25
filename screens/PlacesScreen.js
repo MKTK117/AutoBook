@@ -573,7 +573,11 @@ const PlacesScreen = () => {
           <Text style={styles.itemText}>Filter</Text>
         </Pressable>
 
-        <Pressable style={styles.itemPressable}>
+        <Pressable 
+        onPress={() => navigation.navigate('Map', {
+            searchResults:searchPlaces,
+        })}
+        style={styles.itemPressable}>
           <FontAwesome5 name="map" size={22} color="grey" />
           <Text style={styles.itemText}>Map</Text>
         </Pressable>
