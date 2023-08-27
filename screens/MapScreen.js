@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { View } from "react-native";
 import React, { useRef } from "react";
 import { useRoute } from "@react-navigation/native";
 import MapView, { Marker } from "react-native-maps";
@@ -32,4 +32,4 @@ const MapScreen = () => {
 
 export default MapScreen;
 
-const styles = StyleSheet.create({});
+

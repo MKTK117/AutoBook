@@ -9,6 +9,7 @@ import {
 import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const PropertyCard = ({
   rooms,
@@ -19,10 +20,24 @@ const PropertyCard = ({
   availableRooms,
 }) => {
   const { width, height } = Dimensions.get("window");
+  const navigation = useNavigation();
 
   return (
     <View>
-      <Pressable style={styles.cardPressableBox}>
+      <Pressable 
+      onPress={() => navigation.navigate('Info', {
+        name: property.name,
+        rating: property.rating,
+        oldPrice: property.oldPrice,
+        newPrice: property.newPrice,
+        photos: property.photos,
+        availableRooms: availableRooms,
+        adults: adults,
+        childrens: childrens,
+        rooms: rooms,
+        selectedDates: selectedDates,
+      })}
+      style={styles.cardPressableBox}>
         <View>
           <Image
             style={{ height: height / 4, width: width - 280 }}
@@ -42,19 +57,10 @@ const PropertyCard = ({
             />
             <Text>{property.rating}</Text>
             <View
-              style={{
-                backgroundColor: "#6CB4EE",
-                paddingVertical: 3,
-                borderRadius: 5,
-                width: 100,
-              }}
+              style={styles.geniusBox}
             >
               <Text
-                style={{
-                  color: "#fff",
-                  textAlign: "center",
-                  fontSize: 15,
-                }}
+                style={styles.geniusText}
               >
                 Genius Level
               </Text>
@@ -62,34 +68,21 @@ const PropertyCard = ({
           </View>
 
           <Text
-            style={{
-              width: 200,
-              marginTop: 6,
-              color: "gray",
-              fontWeight: "bold",
-            }}
+            style={styles.addressLine}
           >
             {property.address.length > 50
               ? property.address.substr(0, 50)
               : property.address}
           </Text>
 
-          <Text style={{ marginTop: 4, fontSize: 15, fontWeight: "500" }}>
+          <Text style={styles.addressLineText}>
             Price for 1 Night and {adults} adults
           </Text>
           <View
-            style={{
-              marginTop: 5,
-              flexDirection: "row",
-              gap: 8,
-            }}
+            style={styles.pricesLine}
           >
             <Text
-              style={{
-                color: "red",
-                fontSize: 18,
-                textDecorationLine: "line-through",
-              }}
+              style={styles.oldPrice}
             >
               {property.oldPrice * adults}
             </Text>
@@ -98,29 +91,19 @@ const PropertyCard = ({
           <View
           style={{marginTop:6}}
           >
-            <Text style={{fontSize:16, color:'gray'}}>
+            <Text style={styles.roomsDescrText}>
                 Deluxe Room
             </Text>
-            <Text style={{fontSize:16, color:'gray'}}>
+            <Text style={styles.roomsDescrText}>
                 Hotel Room : 1 bed
             </Text>
           </View>
 
           <View 
-          style={{
-            backgroundColor: "#6082B6",
-            paddingVertical: 2,
-            borderRadius: 5,
-            marginTop:2,
-            width: 150,
-            paddingHorizontal: 3
-          }}
+          style={styles.limitedTimeDealBox}
           >
             <Text
-            style={{
-                color: "#fff",
-                textAlign: "center",
-              }}
+            style={styles.limitedTimeDealText}
             >Limited Time Deal</Text>
           </View>
         </View>
@@ -148,4 +131,53 @@ const styles = StyleSheet.create({
     gap: 6,
     marginTop: 7,
   },
+  geniusBox: {
+    backgroundColor: "#6CB4EE",
+    paddingVertical: 3,
+    borderRadius: 5,
+    width: 100,
+  },
+  geniusText: {
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 15,
+  },
+  addressLine: {
+    width: 200,
+    marginTop: 6,
+    color: "gray",
+    fontWeight: "bold",
+  },
+  addressLineText: {
+    marginTop: 4, 
+    fontSize: 15, 
+    fontWeight: "500" 
+  },
+  pricesLine: {
+    marginTop: 5,
+    flexDirection: "row",
+    gap: 8,
+  },
+  oldPrice: {
+    color: "red",
+    fontSize: 18,
+    textDecorationLine: "line-through",
+  },
+  roomsDescrText: {
+    fontSize:16, 
+    color:'gray'
+  },
+  limitedTimeDealBox: {
+    backgroundColor: "#6082B6",
+    paddingVertical: 2,
+    borderRadius: 5,
+    marginTop:2,
+    width: 150,
+    paddingHorizontal: 3
+  },
+  limitedTimeDealText: {
+    color: "#fff",
+    textAlign: "center",
+  }
+
 });

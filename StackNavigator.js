@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -13,6 +13,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import SearchScreen from "./screens/SearchScreen";
 import PlacesScreen from "./screens/PlacesScreen";
 import MapScreen from "./screens/MapScreen";
+import PropertyInfoScreen from "./screens/PropertyInfoScreen";
+import RoomScreen from "./screens/RoomScreen";
+import UserScreen from "./screens/UserScreen";
+import ConfirmationScreen from "./screens/ConfirmationScreen";
 
 const StackNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -87,6 +91,7 @@ const StackNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+
         <Stack.Screen
           name="Main"
           component={BottomTabs}
@@ -106,6 +111,22 @@ const StackNavigator = () => {
           component={MapScreen}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="Info"
+          component={PropertyInfoScreen}
+        />
+        <Stack.Screen
+          name="Rooms"
+          component={RoomScreen}
+        />
+        <Stack.Screen
+          name="User"
+          component={UserScreen}
+        />
+        <Stack.Screen
+          name="Confirmation"
+          component={ConfirmationScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -113,4 +134,4 @@ const StackNavigator = () => {
 
 export default StackNavigator;
 
-const styles = StyleSheet.create({});
+

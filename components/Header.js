@@ -6,13 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const Header = () => {
   return (
     <View
-      style={{
-        backgroundColor: "#003580",
-        height: 65,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-around",
-      }}
+      style={styles.contentBox}
     >
       <Pressable style={[styles.pressable, {borderWidth:1}]} >
         <Ionicons name="car-sport-outline" size={26} color="white" />
@@ -41,6 +35,13 @@ const Header = () => {
 export default Header;
 
 const styles = StyleSheet.create({
+    contentBox: {
+        backgroundColor: "#003580",
+        height: 65,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-around",
+    },
     pressable:{
         flexDirection: 'row',
         alignItems:'center',
