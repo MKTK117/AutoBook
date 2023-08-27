@@ -64,42 +64,22 @@ import {
             </Pressable>
   
             <View
-              style={{
-                marginHorizontal: 12,
-                marginTop: 10,
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
+              style={styles.titleBox}
             >
               <View>
                 <Text style={{ fontSize: 25, fontWeight: "bold" }}>
                   {route.params.name}
                 </Text>
                 <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 6,
-                    marginTop: 7,
-                  }}
+                  style={styles.subtitleBox}
                 >
                   <MaterialIcons name="stars" size={24} color="green" />
                   <Text>{route.params.rating}</Text>
                   <View
-                    style={{
-                      backgroundColor: "#003580",
-                      paddingVertical: 3,
-                      borderRadius: 5,
-                      width: 100,
-                    }}
+                    style={styles.geniusBox}
                   >
                     <Text
-                      style={{
-                        textAlign: "center",
-                        color: "white",
-                        fontSize: 15,
-                      }}
+                      style={styles.geniusText}
                     >
                       Genius Level
                     </Text>
@@ -108,29 +88,16 @@ import {
               </View>
   
               <View
-                style={{
-                  backgroundColor: "#17B169",
-                  paddingHorizontal: 6,
-                  paddingVertical: 4,
-                  borderRadius: 6,
-                  position:'absolute',
-                  top: 37,
-                  left: 280,
-                }}
+                style={styles.travelSustainableBox}
               >
-                <Text style={{ color: "white", fontSize: 13,}}>
+                <Text style={styles.travelSustainableText}>
                   Travel sustainable
                 </Text>
               </View>
             </View>
   
             <Text
-              style={{
-                borderColor: "#E0E0E0",
-                borderWidth: 3,
-                height: 1,
-                marginTop: 15,
-              }}
+              style={styles.hrLine}
             />
             <Text
               style={{
@@ -181,29 +148,19 @@ import {
             </View>
   
             <Text
-              style={{
-                borderColor: "#E0E0E0",
-                borderWidth: 3,
-                height: 1,
-                marginTop: 15,
-              }}
+              style={styles.hrLine}
             />
             <View
-              style={{
-                margin: 12,
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 60,
-              }}
+              style={styles.datesBox}
             >
               <View>
                 <Text
-                  style={{ fontSize: 16, fontWeight: "600", marginBottom: 3 }}
+                  style={styles.checkInOut}
                 >
                   Check In
                 </Text>
                 <Text
-                  style={{ fontSize: 16, fontWeight: "bold", color: "#007FFF" }}
+                  style={styles.checkInOutDates}
                 >
                   {route.params.selectedDates.startDate}
                 </Text>
@@ -211,12 +168,12 @@ import {
   
               <View>
                 <Text
-                  style={{ fontSize: 16, fontWeight: "600", marginBottom: 3 }}
+                  style={styles.checkInOut}
                 >
                   Check Out
                 </Text>
                 <Text
-                  style={{ fontSize: 16, fontWeight: "bold", color: "#007FFF" }}
+                  style={styles.checkInOutDates}
                 >
                   {route.params.selectedDates.endDate}
                 </Text>
@@ -235,22 +192,12 @@ import {
             </View>
   
             <Text
-              style={{
-                borderColor: "#E0E0E0",
-                borderWidth: 3,
-                height: 1,
-                marginTop: 15,
-              }}
+              style={styles.hrLine}
             />
             <Amenities />
   
             <Text
-              style={{
-                borderColor: "#E0E0E0",
-                borderWidth: 3,
-                height: 1,
-                marginTop: 15,
-              }}
+              style={styles.hrLine}
             />
           </ScrollView>
         </SafeAreaView>
@@ -267,16 +214,9 @@ import {
           startDate:route.params.selectedDates.startDate,
           endDate:route.params.selectedDates.endDate
         })}
-          style={{
-            backgroundColor: "#6CB4EE",
-            position: "absolute",
-            bottom: 20,
-            padding: 15,
-            width:"95%",
-            marginHorizontal:10,
-          }}
+          style={styles.selectBtn}
         >
-          <Text style={{ textAlign: "center", color: "white",fontWeight:"bold",fontSize:17 }}>
+          <Text style={styles.selectBtnLabel}>
             Select Availabilty
           </Text>
         </Pressable>
@@ -287,8 +227,78 @@ import {
   export default PropertyInfoScreen;
   
   const styles = StyleSheet.create({
-    headerBox: {
-
+    titleBox: {
+        marginHorizontal: 12,
+        marginTop: 10,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
     },
-    
+    subtitleBox: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 6,
+        marginTop: 7,
+    },
+    geniusBox: {
+        backgroundColor: "#003580",
+        paddingVertical: 3,
+        borderRadius: 5,
+        width: 100,
+    },
+    geniusText: {
+        textAlign: "center",
+        color: "white",
+        fontSize: 15,
+    },
+    travelSustainableBox: {
+        backgroundColor: "#17B169",
+        paddingHorizontal: 6,
+        paddingVertical: 4,
+        borderRadius: 6,
+        position:'absolute',
+        top: 37,
+        left: 280,
+    },
+    travelSustainableText: {
+        color: "white", 
+        fontSize: 13,
+    },
+    datesBox: {
+        margin: 12,
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 60,
+    },
+    checkInOut: {
+        fontSize: 16, 
+        fontWeight: "600", 
+        marginBottom: 3
+    },
+    checkInOutDates: {
+        fontSize: 16, 
+        fontWeight: "bold", 
+        color: "#007FFF" 
+    },
+    hrLine: {
+        borderColor: "#E0E0E0",
+        borderWidth: 3,
+        height: 1,
+        marginTop: 15,
+    },
+    selectBtn: {
+        backgroundColor: "#6CB4EE",
+        position: "absolute",
+        bottom: 20,
+        padding: 15,
+        width:"95%",
+        marginHorizontal:10,
+    },
+    selectBtnLabel: {
+        textAlign: "center", 
+        color: "white",
+        fontWeight:"bold",
+        fontSize:17 
+    }
+
   });
