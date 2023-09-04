@@ -5,7 +5,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/HomeScreen";
 import BookingScreen from "./screens/BookingScreen";
 import SavedScreen from "./screens/SavedScreen";
-import ProfileScreen from "./screens/ProfileScreen";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -17,6 +16,7 @@ import PropertyInfoScreen from "./screens/PropertyInfoScreen";
 import RoomScreen from "./screens/RoomScreen";
 import UserScreen from "./screens/UserScreen";
 import ConfirmationScreen from "./screens/ConfirmationScreen";
+import ProfileStack from "./components/ProfileStack";
 
 const StackNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -73,7 +73,7 @@ const StackNavigator = () => {
         />
         <Tab.Screen
           name="Profile"
-          component={ProfileScreen}
+          component={ProfileStack}
           options={{
             tabBarLabel: "Profile",
             headerShown: false,
@@ -127,6 +127,7 @@ const StackNavigator = () => {
           name="Confirmation"
           component={ConfirmationScreen}
         />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

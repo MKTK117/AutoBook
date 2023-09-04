@@ -377,7 +377,7 @@ const HomeScreen = () => {
             <Pressable style={styles.modalPressable}>
               <Pressable
                 style={styles.modalControlsPressables}
-                onPress={() => setChildrens(childrens - 1)}
+                onPress={() => setChildrens(Math.max(0, childrens - 1))}
               >
                 <Text style={styles.modalControlsIncDec}>-</Text>
               </Pressable>

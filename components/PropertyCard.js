@@ -9,7 +9,9 @@ import {
 import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { favoritePlaces } from "../reducers/FavoriteReducer";
 
 const PropertyCard = ({
   rooms,
@@ -21,23 +23,41 @@ const PropertyCard = ({
 }) => {
   const { width, height } = Dimensions.get("window");
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const addToFavorites = () => {
+    dispatch(favoritePlaces({
+      name: property.name,
+      rating: property.rating,
+      oldPrice: property.oldPrice,
+      newPrice: property.newPrice,
+      photos: property.photos,
+      availableRooms: availableRooms,
+      adults: adults,
+      childrens: childrens,
+      rooms: rooms,
+      selectedDates: selectedDates,
+    }));
+  };
 
   return (
     <View>
-      <Pressable 
-      onPress={() => navigation.navigate('Info', {
-        name: property.name,
-        rating: property.rating,
-        oldPrice: property.oldPrice,
-        newPrice: property.newPrice,
-        photos: property.photos,
-        availableRooms: availableRooms,
-        adults: adults,
-        childrens: childrens,
-        rooms: rooms,
-        selectedDates: selectedDates,
-      })}
-      style={styles.cardPressableBox}>
+      <Pressable
+        onPress={() =>
+          navigation.navigate("Info", {
+            name: property.name,
+            rating: property.rating,
+            oldPrice: property.oldPrice,
+            newPrice: property.newPrice,
+            photos: property.photos,
+            availableRooms: availableRooms,
+            adults: adults,
+            childrens: childrens,
+            rooms: rooms,
+            selectedDates: selectedDates,
+          })
+        }
+        style={styles.cardPressableBox}
+      >
         <View>
           <Image
             style={{ height: height / 4, width: width - 280 }}
@@ -47,7 +67,9 @@ const PropertyCard = ({
         <View style={{ padding: 10 }}>
           <View style={styles.cardViewTitleBox}>
             <Text style={{ width: 200 }}>{property.name}</Text>
-            <AntDesign name="hearto" size={24} color="red" />
+            <Pressable onPress={addToFavorites}>
+              <AntDesign name="hearto" size={24} color="red" />
+            </Pressable>
           </View>
           <View style={styles.cardViewSubtitleBox}>
             <MaterialCommunityIcons
@@ -56,20 +78,12 @@ const PropertyCard = ({
               color="green"
             />
             <Text>{property.rating}</Text>
-            <View
-              style={styles.geniusBox}
-            >
-              <Text
-                style={styles.geniusText}
-              >
-                Genius Level
-              </Text>
+            <View style={styles.geniusBox}>
+              <Text style={styles.geniusText}>Genius Level</Text>
             </View>
           </View>
 
-          <Text
-            style={styles.addressLine}
-          >
+          <Text style={styles.addressLine}>
             {property.address.length > 50
               ? property.address.substr(0, 50)
               : property.address}
@@ -78,33 +92,17 @@ const PropertyCard = ({
           <Text style={styles.addressLineText}>
             Price for 1 Night and {adults} adults
           </Text>
-          <View
-            style={styles.pricesLine}
-          >
-            <Text
-              style={styles.oldPrice}
-            >
-              {property.oldPrice * adults}
-            </Text>
+          <View style={styles.pricesLine}>
+            <Text style={styles.oldPrice}>{property.oldPrice * adults}</Text>
             <Text style={{ fontSize: 18 }}>{property.newPrice * adults}</Text>
           </View>
-          <View
-          style={{marginTop:6}}
-          >
-            <Text style={styles.roomsDescrText}>
-                Deluxe Room
-            </Text>
-            <Text style={styles.roomsDescrText}>
-                Hotel Room : 1 bed
-            </Text>
+          <View style={{ marginTop: 6 }}>
+            <Text style={styles.roomsDescrText}>Deluxe Room</Text>
+            <Text style={styles.roomsDescrText}>Hotel Room : 1 bed</Text>
           </View>
 
-          <View 
-          style={styles.limitedTimeDealBox}
-          >
-            <Text
-            style={styles.limitedTimeDealText}
-            >Limited Time Deal</Text>
+          <View style={styles.limitedTimeDealBox}>
+            <Text style={styles.limitedTimeDealText}>Limited Time Deal</Text>
           </View>
         </View>
       </Pressable>
@@ -149,9 +147,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   addressLineText: {
-    marginTop: 4, 
-    fontSize: 15, 
-    fontWeight: "500" 
+    marginTop: 4,
+    fontSize: 15,
+    fontWeight: "500",
   },
   pricesLine: {
     marginTop: 5,
@@ -164,20 +162,19 @@ const styles = StyleSheet.create({
     textDecorationLine: "line-through",
   },
   roomsDescrText: {
-    fontSize:16, 
-    color:'gray'
+    fontSize: 16,
+    color: "gray",
   },
   limitedTimeDealBox: {
     backgroundColor: "#6082B6",
     paddingVertical: 2,
     borderRadius: 5,
-    marginTop:2,
+    marginTop: 2,
     width: 150,
-    paddingHorizontal: 3
+    paddingHorizontal: 3,
   },
   limitedTimeDealText: {
     color: "#fff",
     textAlign: "center",
-  }
-
+  },
 });
