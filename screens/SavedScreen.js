@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import { SafeAreaView, StyleSheet, Text, View, Pressable } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons"; // Import MaterialIcons
+// import { MaterialIcons } from "@expo/vector-icons"; 
 import { useNavigation } from "@react-navigation/native";
 
 const SavedScreen = () => {

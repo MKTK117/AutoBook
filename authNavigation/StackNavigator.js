@@ -2,21 +2,21 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "./screens/HomeScreen";
-import BookingScreen from "./screens/BookingScreen";
-import SavedScreen from "./screens/SavedScreen";
+import HomeScreen from "../screens/HomeScreen";
+import BookingScreen from "../screens/BookingScreen";
+import SavedScreen from "../screens/SavedScreen";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
-import SearchScreen from "./screens/SearchScreen";
-import PlacesScreen from "./screens/PlacesScreen";
-import MapScreen from "./screens/MapScreen";
-import PropertyInfoScreen from "./screens/PropertyInfoScreen";
-import RoomScreen from "./screens/RoomScreen";
-import UserScreen from "./screens/UserScreen";
-import ConfirmationScreen from "./screens/ConfirmationScreen";
-import ProfileStack from "./components/ProfileStack";
+import SearchScreen from "../screens/SearchScreen";
+import PlacesScreen from "../screens/PlacesScreen";
+import MapScreen from "../screens/MapScreen";
+import PropertyInfoScreen from "../screens/PropertyInfoScreen";
+import RoomScreen from "../screens/RoomScreen";
+import UserScreen from "../screens/UserScreen";
+import ConfirmationScreen from "../screens/ConfirmationScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 const StackNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -73,7 +73,7 @@ const StackNavigator = () => {
         />
         <Tab.Screen
           name="Profile"
-          component={ProfileStack}
+          component={ProfileScreen}
           options={{
             tabBarLabel: "Profile",
             headerShown: false,

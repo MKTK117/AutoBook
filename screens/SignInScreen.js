@@ -1,58 +1,63 @@
-// LoginScreen.js
-import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   View,
   TextInput,
-  Button,
-  SafeAreaView,
   StyleSheet,
   Pressable,
   Text,
-	Switch,
+  KeyboardAvoidingView,
 } from "react-native";
-import { useDispatch } from "react-redux";
-import { login } from "../reducers/AuthReducer";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-const LoginScreen = () => {
-  const [username, setUsername] = useState("");
+
+
+const SignInScreen = () => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-	
-	const dispatch = useDispatch();
-
-  const handleLogin = () => {
-    if (username && password) {
-      dispatch(login())
-    }
+ 
+  const auth = getAuth();
+  
+  const handleSignInUser = () => {
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      console.log('User signed in: ' + user.email)
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
   };
 
   return (
-    <SafeAreaView>
+    <KeyboardAvoidingView behavior="padding">
       <View style={styles.boxContent}>
         <TextInput
           style={styles.textInput}
-          placeholder="Username"
-          onChangeText={(text) => setUsername(text)}
+          placeholder="E-mail"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
         />
         <TextInput
           style={styles.textInput}
           placeholder="Password"
+          value={password}
           onChangeText={(text) => setPassword(text)}
           secureTextEntry
         />
-				<View
-				style={styles.toggleBlock}
-				>
-					
-				</View>
-				
-        <Pressable style={styles.btnLogin} onPress={handleLogin}>
+        <Pressable 
+        onPress={handleSignInUser} 
+        style={({pressed}) => [
+          styles.btnLogin,
+          {backgroundColor: pressed ? "#003580" : '#3b82f6'}
+        ]}>
           <Text style={{ color: "#FFF", fontSize: 17, fontWeight: "600" }}>
             Login
           </Text>
         </Pressable>
       </View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -80,15 +85,7 @@ const styles = StyleSheet.create({
     width: "80%",
     height: 50,
     borderRadius: 5,
-    backgroundColor: "#003580",
   },
-	toggleBlock: {
-		gap:130,
-		flexDirection: 'row',
-		alignItems:'center',
-		marginBottom: 10,
-	},
-
 });
 
-export default LoginScreen;
+export default SignInScreen;

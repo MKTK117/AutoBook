@@ -1,14 +1,10 @@
 import React from "react";
-import StackNavigator from "./StackNavigator";
+import StackNavigator from "./authNavigation/StackNavigator";
 import { ModalPortal } from "react-native-modals";
+import RootNavigation from "./authNavigation";
 
 const Entry = () => {
-  return (
-    <>
-      <StackNavigator />
-      <ModalPortal />
-    </>
-  );
+  return <RootNavigation/>
 };
 
 export default Entry;

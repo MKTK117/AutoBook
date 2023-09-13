@@ -15,45 +15,43 @@ import { useDispatch } from "react-redux";
 import { logout } from "../reducers/AuthReducer";
 
 const ProfileScreen = () => {
-
   const createTwoButtonAlert = () =>
-    Alert.alert('Exit', 'Leave so soon ?', [
+    Alert.alert("Exit", "Leave so soon ?", [
       {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
       },
-      {text: 'Yes', onPress: () => dispatch(logout())},
+      { text: "Yes", onPress: () => dispatch(logout()) },
     ]);
-  
+
   const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const dispatch = useDispatch();
 
   return (
     <View>
       <SafeAreaView style={styles.profileHeader}>
         <View
-        style={{flexDirection:'row', justifyContent:'center', alignItems:'center', gap:300,}}
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 300,
+          }}
         >
-        <Pressable
-        onPress={createTwoButtonAlert}
-        >
-          <Ionicons
-            name="md-exit-outline"
-            size={30}
-            color="#003580"
+          <Pressable onPress={createTwoButtonAlert}>
+            <Ionicons name="md-exit-outline" size={30} color="#003580" />
+          </Pressable>
+          <Switch
+            trackColor={{ false: "#767577", true: "#f4f3f4" }}
+            thumbColor={isEnabled ? "#003580" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
           />
-        </Pressable>
-					<Switch
-				 trackColor={{false: '#767577', true: '#f4f3f4'}}
-				 thumbColor={isEnabled ? '#003580' : '#f4f3f4'}
-				 ios_backgroundColor="#3e3e3e"
-				 onValueChange={toggleSwitch}
-				 value={isEnabled}
-				/>
         </View>
-        
+
         <Image
           style={styles.profileImg}
           source={{
@@ -159,12 +157,10 @@ const ProfileScreen = () => {
           </Text>
         </Pressable>
       </ScrollView>
-      <SafeAreaView 
-      style={styles.bottomBlock}
-      >
-      <Text>Here will be your last ride and history</Text>
-      <Text>Here will be recomendations</Text>
-      <Text>Here will be your balance</Text>
+      <SafeAreaView style={styles.bottomBlock}>
+        <Text>Here will be your last ride and history</Text>
+        <Text>Here will be recomendations</Text>
+        <Text>Here will be your balance</Text>
       </SafeAreaView>
     </View>
   );
@@ -191,7 +187,7 @@ const styles = StyleSheet.create({
     borderColor: "#bbb",
     width: 150,
     height: 150,
-    borderRadius: "100%",
+    borderRadius: 100,
   },
   nameTitle: {
     fontSize: 20,
@@ -199,9 +195,9 @@ const styles = StyleSheet.create({
   },
   bottomBlock: {
     marginTop: 10,
-    borderTopRightRadius:20,
-    borderTopLeftRadius:20,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
     borderWidth: 0.5,
-    borderColor:'#bbb'
-  }
+    borderColor: "#bbb",
+  },
 });
