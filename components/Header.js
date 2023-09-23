@@ -1,33 +1,28 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+
 
 const Header = () => {
+
   return (
-    <View
-      style={styles.contentBox}
-    >
-      <Pressable style={[styles.pressable, {borderWidth:1}]} >
-        <Ionicons name="car-sport-outline" size={26} color="white" />
-        <Text style={styles.presslabel}>Cars</Text>
-      </Pressable>
+    <View style={styles.contentBox}>
+      <Pressable
+        onPress={() => navigation.navigate("Search")}
+        style={styles.locationContainer}
+      >
+        <Ionicons name="location-outline" size={24} color="black" />
+        <TextInput
+          placeholderTextColor="black"
+          placeholder="Enter your location..."
 
-      <Pressable style={styles.pressable} >
-        <Ionicons name="calendar-outline" size={26} color="white" />
-        <Text style={styles.presslabel}>Queue</Text>
+          // {
+          //   route?.params ? route.params.input : "Enter your Location"
+          // }
+        />
       </Pressable>
-
-      <Pressable style={styles.pressable} >
-        <MaterialCommunityIcons name="truck-delivery-outline" size={26} color="white" />
-        <Text style={styles.presslabel}>Arrivals</Text>
-      </Pressable>
-
-      <Pressable style={styles.pressable} >
-        <MaterialCommunityIcons name="wrench-outline" size={26} color="white" />
-        <Text style={styles.presslabel}>Soon</Text>
-      </Pressable>
-
+      <Feather style={styles.filters} name="sliders" size={28} color="white" />
     </View>
   );
 };
@@ -35,25 +30,43 @@ const Header = () => {
 export default Header;
 
 const styles = StyleSheet.create({
-    contentBox: {
-        backgroundColor: "#003580",
-        height: 65,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-around",
-    },
-    pressable:{
-        flexDirection: 'row',
-        alignItems:'center',
-        borderColor: '#fff',
-        borderWidth:0,
-        borderRadius:25,
-        padding:8,
-    },
-    presslabel:{
-        marginLeft:8,
-        fontWeight:'bold',
-        color:'#FFF',
-        fontSize:15,
-    }
+  contentBox: {
+    width: '100%',
+    backgroundColor: "#003580",
+    height: 90,
+    flexDirection: "row",
+    alignItems:'center',
+    alignContent:'center',
+    paddingHorizontal:20,
+    gap: 30,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
+  },
+  pressable: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderColor: "#fff",
+    borderWidth: 0,
+    borderRadius: 25,
+    padding: 8,
+  },
+  presslabel: {
+    marginLeft: 8,
+    fontWeight: "bold",
+    color: "#FFF",
+    fontSize: 15,
+  },
+  locationContainer: {
+    flex: 5,
+    flexDirection: 'row',
+    alignItems:'center',
+    alignContent:'center',
+    gap:10,
+    backgroundColor: '#fff',
+    padding: 8,
+    borderRadius: 15,
+  },
+  filters: {
+    flex:1,
+  }
 });

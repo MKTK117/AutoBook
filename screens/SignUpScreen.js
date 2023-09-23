@@ -12,6 +12,8 @@ const SignUpScreen = () => {
   
   const auth = getAuth();
 
+  
+
   const handleSignUpPress = () => {
     // Add your signup logic here, including validation
     if (!email || !password || !confirmPassword) {
@@ -22,8 +24,7 @@ const SignUpScreen = () => {
       createUserWithEmailAndPassword(auth, email, password, username)
       .then((userCredential) => {
         // Successfully created user
-        const user = userCredential.user;
-        console.log("User created:", user.username);
+        return userCredential.user.displayName = username
         // Dispatch 
       })
       .catch((error) => {

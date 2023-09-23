@@ -13,8 +13,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { logout } from "../reducers/AuthReducer";
+import { getAuth } from "firebase/auth";
 
 const ProfileScreen = () => {
+
+
   const createTwoButtonAlert = () =>
     Alert.alert("Exit", "Leave so soon ?", [
       {
@@ -28,6 +31,21 @@ const ProfileScreen = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const dispatch = useDispatch();
+
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if (user !== null) {
+    // The user object has basic properties such as display name, email, etc.
+    const displayName = user.displayName;
+    const email = user.email;
+    const photoURL = user.photoURL;
+    const emailVerified = user.emailVerified;
+
+    // The user's ID, unique to the Firebase project. Do NOT use
+    // this value to authenticate with your backend server, if
+    // you have one. Use User.getToken() instead.
+    const uid = user.uid;
+  }
 
   return (
     <View>
@@ -58,7 +76,7 @@ const ProfileScreen = () => {
             uri: "https://forums.pixeltailgames.com/uploads/default/original/3X/6/4/64863ed28ce1cf94323dd3fe37b86117ffc0b58a.png",
           }}
         />
-        <Text style={styles.nameTitle}>Mark Tkachov</Text>
+        <Text style={styles.nameTitle}>{user.displayName}</Text>
       </SafeAreaView>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <Pressable

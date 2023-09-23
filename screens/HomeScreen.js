@@ -7,7 +7,7 @@ import {
   Text,
   TextInput,
   View,
-  Alert
+  Alert,
 } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -31,8 +31,6 @@ const HomeScreen = () => {
   const [adults, setAdults] = useState(2);
   const [childrens, setChildrens] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
-
-
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -75,13 +73,13 @@ const HomeScreen = () => {
 
   const searchPlaces = (place) => {
     if (!route.params || !selectedDates) {
-      Alert.alert('Error', 'Fill all fields', [
+      Alert.alert("Error", "Fill all fields", [
         {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
         },
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
+        { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
     }
 
@@ -91,8 +89,8 @@ const HomeScreen = () => {
         adults: adults,
         childrens: childrens,
         selectedDates: selectedDates,
-        place:place,
-      })
+        place: place,
+      });
     }
   };
 

@@ -17,6 +17,9 @@ import RoomScreen from "../screens/RoomScreen";
 import UserScreen from "../screens/UserScreen";
 import ConfirmationScreen from "../screens/ConfirmationScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import OtherProfileScreen from "../screens/OtherProfileScreen";
+import HomeScreenAuto from "../screens/HomeScreenAuto";
+import CarScreen from "../screens/CarSreen";
 
 const StackNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -27,7 +30,7 @@ const StackNavigator = () => {
       <Tab.Navigator>
         <Tab.Screen
           name="Home"
-          component={HomeScreen}
+          component={HomeScreenAuto}
           options={{
             tabBarLabel: "Home",
             headerShown: false,
@@ -73,7 +76,7 @@ const StackNavigator = () => {
         />
         <Tab.Screen
           name="Profile"
-          component={ProfileScreen}
+          component={OtherProfileScreen}
           options={{
             tabBarLabel: "Profile",
             headerShown: false,
@@ -127,7 +130,10 @@ const StackNavigator = () => {
           name="Confirmation"
           component={ConfirmationScreen}
         />
-        
+        <Stack.Screen
+          name="CarScreen"
+          component={CarScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
